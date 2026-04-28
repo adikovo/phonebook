@@ -163,9 +163,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Server
 
-- [ ] T049 [P] [US5] Add `uploadPhoto` to `server/controllers/contactsController.js`: accepts `req.file` from multer; if the contact already had a `photo`, unlink the old file from `server/uploads/`; set `photo` to the new filename; on disk-write failure, delete the new file and re-throw so `errorHandler` returns 500
-- [ ] T050 [P] [US5] Add `deletePhoto` to the same controller: unlinks `server/uploads/<photo>` (ignore ENOENT), sets `photo: null`, returns the contact; 404 if contact not found OR `photo` was already null
-- [ ] T051 [US5] Add routes `POST /:id/photo` (with `upload.single('photo')` middleware before the controller) and `DELETE /:id/photo` in `server/routes/contacts.js`
+- [x] T049 [P] [US5] Add `uploadPhoto` to `server/controllers/contactsController.js`: accepts `req.file` from multer; if the contact already had a `photo`, unlink the old file from `server/uploads/`; set `photo` to the new filename; on disk-write failure, delete the new file and re-throw so `errorHandler` returns 500
+- [x] T050 [P] [US5] Add `deletePhoto` to the same controller: unlinks `server/uploads/<photo>` (ignore ENOENT), sets `photo: null`, returns the contact; 404 if contact not found OR `photo` was already null
+- [x] T051 [US5] Add routes `POST /:id/photo` (with `upload.single('photo')` middleware before the controller) and `DELETE /:id/photo` in `server/routes/contacts.js`
 
 ### Client
 

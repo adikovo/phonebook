@@ -98,6 +98,52 @@ async function toggleFavorite(req, res) {
   res.json(contact)
 }
 
+async function uploadPhoto(req, res) {
+  if (!req.file) {
+    const err = new Error('No file uploaded')
+    err.status = 400
+    throw err
+  }
+
+  const newFilename = req.file.filename
+
+  try {
+    const contact = await Contact.findById(req.params.id)
+    if (!contact) throw notFound()
+
+    const oldFilename = contact.photo
+    contact.photo = newFilename
+    await contact.save()
+
+    if (oldFilename) {
+      await unlinkPhoto(oldFilename)
+    }
+
+    res.json(contact)
+  } catch (err) {
+    await unlinkPhoto(newFilename).catch(() => {})
+    throw err
+  }
+}
+
+async function deletePhoto(req, res) {
+  const contact = await Contact.findById(req.params.id)
+  if (!contact) throw notFound()
+
+  if (!contact.photo) {
+    const err = new Error('Contact has no photo')
+    err.status = 404
+    throw err
+  }
+
+  const filename = contact.photo
+  contact.photo = null
+  await contact.save()
+
+  await unlinkPhoto(filename)
+  res.json(contact)
+}
+
 module.exports = {
   listContacts,
   getContact,
@@ -105,4 +151,6 @@ module.exports = {
   updateContact,
   deleteContact,
   toggleFavorite,
+  uploadPhoto,
+  deletePhoto,
 }
