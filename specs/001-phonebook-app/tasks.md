@@ -47,7 +47,7 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 - [x] T009 Create `server/index.js` with Express bootstrap: load `dotenv`, enable `cors()` and `express.json()`, mount `/uploads` static route serving `server/uploads/`, mount `/api/contacts` and `/api/tags` routers (stubs for now), attach `errorHandler` middleware last, listen on `process.env.PORT`
 - [x] T010 [P] Create `server/config/db.js` exporting `connectDB()` that calls `mongoose.connect(process.env.MONGODB_URI)`; call it from `server/index.js` on startup
-- [ ] T011 [P] Create `server/middleware/errorHandler.js` exporting an Express error middleware that responds with `{ error: <message> }` and the appropriate status code (400 for `ValidationError`/`CastError`, 500 otherwise)
+- [x] T011 [P] Create `server/middleware/errorHandler.js` exporting an Express error middleware that responds with `{ error: <message> }` and the appropriate status code (400 for `ValidationError`/`CastError`, 500 otherwise)
 - [ ] T012 [P] Create `server/middleware/upload.js` configuring `multer.diskStorage` (dest `server/uploads/`, filename `<contactId>-<timestamp>.<ext>`), `fileFilter` accepting only `image/jpeg|png|webp|gif`, `limits.fileSize = 5 * 1024 * 1024`
 - [ ] T013 Create `server/models/Contact.js` defining the `PhoneEntry` sub-schema and the `Contact` schema per data-model.md (validation rules from FR-001/007/008, required `name` and `phones`, default `isFavorite: false`, Mongoose `timestamps: true`); add indexes on `name`, `tags`, `isFavorite`
 - [ ] T014 Create `server/uploads/.gitkeep` so the upload directory exists in fresh checkouts

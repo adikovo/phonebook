@@ -5,6 +5,7 @@ const express = require('express')
 const cors = require('cors')
 
 const { connectDB } = require('./config/db')
+const errorHandler = require('./middleware/errorHandler')
 const contactsRouter = require('./routes/contacts')
 const tagsRouter = require('./routes/tags')
 
@@ -18,11 +19,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/api/contacts', contactsRouter)
 app.use('/api/tags', tagsRouter)
 
-// Temporary inline error handler — replaced by middleware/errorHandler.js in T011.
-app.use((err, req, res, next) => {
-  console.error(err)
-  res.status(500).json({ error: 'Internal server error' })
-})
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 4000
 
