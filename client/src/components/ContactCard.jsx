@@ -1,9 +1,18 @@
+import { Star } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { AvatarOrInitials } from '@/components/AvatarOrInitials'
+import { cn } from '@/lib/utils'
 
-export function ContactCard({ contact, onClick }) {
+export function ContactCard({ contact, onClick, onToggleFavorite }) {
   const primaryPhone = contact.phones?.[0]
+
+  function handleStarClick(e) {
+    e.stopPropagation()
+    onToggleFavorite?.(contact)
+  }
+
   return (
     <Card
       className="cursor-pointer transition-colors hover:bg-accent/40"
@@ -33,6 +42,23 @@ export function ContactCard({ contact, onClick }) {
             </div>
           )}
         </div>
+        {onToggleFavorite && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label={contact.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            aria-pressed={contact.isFavorite}
+            onClick={handleStarClick}
+          >
+            <Star
+              className={cn(
+                'size-5',
+                contact.isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'
+              )}
+            />
+          </Button>
+        )}
       </CardContent>
     </Card>
   )

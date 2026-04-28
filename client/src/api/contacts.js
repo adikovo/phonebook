@@ -34,8 +34,9 @@ export async function deleteContact(id) {
 
 // Stubs — replaced in later phases.
 
-export async function toggleFavorite(_id, _isFavorite) {
-  throw new Error('toggleFavorite not implemented yet (T042)')
+export async function toggleFavorite(id, isFavorite) {
+  const { data } = await api.patch(`/contacts/${id}/favorite`, { isFavorite })
+  return data
 }
 
 export async function uploadPhoto(_id, _file) {

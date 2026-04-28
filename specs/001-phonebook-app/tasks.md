@@ -128,10 +128,10 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Client
 
-- [ ] T042 [P] [US3] Implement `toggleFavorite` in `client/src/api/contacts.js`
-- [ ] T043 [P] [US3] Add a star toggle button to `client/src/components/ContactCard.jsx`: filled star when `isFavorite`, outline otherwise; clicking calls `toggleFavorite` and triggers `reload()` on the parent's `useContacts`; stop click propagation so it doesn't open the detail modal
-- [ ] T044 [US3] Create `client/src/pages/FavoritesPage.jsx` reusing the same layout as `AllContactsPage` but calling `useContacts({ favoritesOnly: true, ... })`; show "No favorites yet" empty state when zero results and no active filter
-- [ ] T045 [US3] Wire `FavoritesPage` to the `/favorites` route in `client/src/App.jsx`
+- [x] T042 [P] [US3] Implement `toggleFavorite` in `client/src/api/contacts.js`
+- [x] T043 [P] [US3] Add a star toggle button to `client/src/components/ContactCard.jsx`: filled star when `isFavorite`, outline otherwise; clicking calls `toggleFavorite` and triggers `reload()` on the parent's `useContacts`; stop click propagation so it doesn't open the detail modal
+- [x] T044 [US3] Create `client/src/pages/FavoritesPage.jsx` reusing the same layout as `AllContactsPage` but calling `useContacts({ favoritesOnly: true, ... })`; show "No favorites yet" empty state when zero results and no active filter
+- [x] T045 [US3] Wire `FavoritesPage` to the `/favorites` route in `client/src/App.jsx`
 
 **Checkpoint**: Toggling the star on a card moves it in/out of the Favorites tab in real time. Search and tag chips work inside Favorites.
 

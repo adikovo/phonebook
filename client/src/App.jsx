@@ -1,6 +1,7 @@
 import { Routes, Route, Outlet } from 'react-router-dom'
 import { NavTabs } from '@/components/NavTabs'
 import { AllContactsPage } from '@/pages/AllContactsPage'
+import { FavoritesPage } from '@/pages/FavoritesPage'
 
 function Layout() {
   return (
@@ -13,20 +14,12 @@ function Layout() {
   )
 }
 
-function FavoritesPlaceholder() {
-  return (
-    <div className="text-muted-foreground">
-      Favorites page — coming in T044.
-    </div>
-  )
-}
-
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<AllContactsPage />} />
-        <Route path="/favorites" element={<FavoritesPlaceholder />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
       </Route>
     </Routes>
   )

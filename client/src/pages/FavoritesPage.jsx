@@ -1,20 +1,22 @@
 import { useState } from 'react'
-import { Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { ContactCard } from '@/components/ContactCard'
-import { ContactForm } from '@/components/ContactForm'
 import { ContactDetail } from '@/components/ContactDetail'
+import { ContactForm } from '@/components/ContactForm'
 import { SearchBar } from '@/components/SearchBar'
 import { TagFilterChips } from '@/components/TagFilterChips'
 import { useContacts } from '@/hooks/useContacts'
 import { useTags } from '@/hooks/useTags'
 import { toggleFavorite } from '@/api/contacts'
 
-export function AllContactsPage() {
+export function FavoritesPage() {
   const [search, setSearch] = useState('')
   const [selectedTags, setSelectedTags] = useState([])
 
-  const { contacts, loading, error, reload } = useContacts({ search, tags: selectedTags })
+  const { contacts, loading, error, reload } = useContacts({
+    search,
+    tags: selectedTags,
+    favoritesOnly: true,
+  })
   const { tags: availableTags, reload: reloadTags } = useTags()
 
   const [detailContact, setDetailContact] = useState(null)
@@ -28,15 +30,19 @@ export function AllContactsPage() {
     setDetailOpen(true)
   }
 
-  function openCreate() {
-    setEditingContact(null)
-    setFormOpen(true)
-  }
-
   function openEdit(contact) {
     setDetailOpen(false)
     setEditingContact(contact)
     setFormOpen(true)
+  }
+
+  async function handleToggleFavorite(contact) {
+    try {
+      await toggleFavorite(contact._id, !contact.isFavorite)
+      reload()
+    } catch (err) {
+      console.error('Failed to toggle favorite:', err)
+    }
   }
 
   function handleSaved() {
@@ -50,26 +56,11 @@ export function AllContactsPage() {
     reloadTags()
   }
 
-  async function handleToggleFavorite(contact) {
-    try {
-      await toggleFavorite(contact._id, !contact.isFavorite)
-      reload()
-    } catch (err) {
-      console.error('Failed to toggle favorite:', err)
-    }
-  }
-
   const isFiltering = search.length > 0 || selectedTags.length > 0
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">All Contacts</h1>
-        <Button onClick={openCreate}>
-          <Plus className="size-4 mr-1" />
-          Add contact
-        </Button>
-      </div>
+      <h1 className="text-2xl font-semibold">Favorites</h1>
 
       <SearchBar value={search} onChange={setSearch} />
 
@@ -88,18 +79,11 @@ export function AllContactsPage() {
       {loading ? (
         <div className="text-sm text-muted-foreground">Loading…</div>
       ) : contacts.length === 0 ? (
-        isFiltering ? (
-          <div className="rounded-md border border-dashed py-12 text-center text-muted-foreground">
-            No contacts match your search.
-          </div>
-        ) : (
-          <div className="rounded-md border border-dashed py-12 text-center text-muted-foreground">
-            <p className="mb-2">No contacts yet.</p>
-            <Button variant="outline" onClick={openCreate}>
-              Add your first contact
-            </Button>
-          </div>
-        )
+        <div className="rounded-md border border-dashed py-12 text-center text-muted-foreground">
+          {isFiltering
+            ? 'No favorites match your search.'
+            : 'No favorites yet. Tap the star on a contact to add it here.'}
+        </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
           {contacts.map((contact) => (
