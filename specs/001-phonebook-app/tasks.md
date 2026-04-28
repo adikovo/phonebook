@@ -45,7 +45,7 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Server foundation
 
-- [ ] T009 Create `server/index.js` with Express bootstrap: load `dotenv`, enable `cors()` and `express.json()`, mount `/uploads` static route serving `server/uploads/`, mount `/api/contacts` and `/api/tags` routers (stubs for now), attach `errorHandler` middleware last, listen on `process.env.PORT`
+- [x] T009 Create `server/index.js` with Express bootstrap: load `dotenv`, enable `cors()` and `express.json()`, mount `/uploads` static route serving `server/uploads/`, mount `/api/contacts` and `/api/tags` routers (stubs for now), attach `errorHandler` middleware last, listen on `process.env.PORT`
 - [ ] T010 [P] Create `server/config/db.js` exporting `connectDB()` that calls `mongoose.connect(process.env.MONGODB_URI)`; call it from `server/index.js` on startup
 - [ ] T011 [P] Create `server/middleware/errorHandler.js` exporting an Express error middleware that responds with `{ error: <message> }` and the appropriate status code (400 for `ValidationError`/`CastError`, 500 otherwise)
 - [ ] T012 [P] Create `server/middleware/upload.js` configuring `multer.diskStorage` (dest `server/uploads/`, filename `<contactId>-<timestamp>.<ext>`), `fileFilter` accepting only `image/jpeg|png|webp|gif`, `limits.fileSize = 5 * 1024 * 1024`
