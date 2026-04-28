@@ -15,27 +15,31 @@ export function ContactCard({ contact, onClick, onToggleFavorite }) {
 
   return (
     <Card
-      className="cursor-pointer transition-colors hover:bg-accent/40"
+      className="cursor-pointer rounded-xl border shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-primary/30 py-0 gap-0"
       onClick={() => onClick?.(contact)}
     >
-      <CardContent className="flex items-center gap-4 p-4">
-        <AvatarOrInitials name={contact.name} photo={contact.photo} className="size-12" />
+      <CardContent className="flex items-center gap-3 p-3">
+        <AvatarOrInitials name={contact.name} photo={contact.photo} className="size-10 shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="font-medium truncate">{contact.name}</div>
+          <div className="font-semibold text-sm leading-tight truncate">{contact.name}</div>
           {primaryPhone && (
-            <div className="text-sm text-muted-foreground truncate">
+            <div className="mt-0.5 text-xs text-muted-foreground truncate">
               {primaryPhone.number}
             </div>
           )}
           {contact.tags && contact.tags.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
+            <div className="mt-1.5 flex flex-wrap gap-1">
               {contact.tags.slice(0, 3).map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-xs">
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className="bg-primary/10 text-primary border-transparent text-[10px] px-1.5 py-0 font-medium"
+                >
                   {tag}
                 </Badge>
               ))}
               {contact.tags.length > 3 && (
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0">
                   +{contact.tags.length - 3}
                 </Badge>
               )}
@@ -50,11 +54,12 @@ export function ContactCard({ contact, onClick, onToggleFavorite }) {
             aria-label={contact.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             aria-pressed={contact.isFavorite}
             onClick={handleStarClick}
+            className="size-8 shrink-0"
           >
             <Star
               className={cn(
-                'size-5',
-                contact.isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'
+                'size-4',
+                contact.isFavorite ? 'fill-primary text-primary' : 'text-muted-foreground'
               )}
             />
           </Button>

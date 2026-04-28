@@ -61,8 +61,8 @@ export function FavoritesPage() {
   const isFiltering = search.length > 0 || selectedTags.length > 0
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-semibold">Favorites</h1>
+    <div className="space-y-3">
+      <h1 className="text-xl font-bold tracking-tight">Favorites</h1>
 
       <SearchBar value={search} onChange={setSearch} />
 
@@ -87,7 +87,7 @@ export function FavoritesPage() {
             : 'No favorites yet. Tap the star on a contact to add it here.'}
         </div>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           {contacts.map((contact) => (
             <ContactCard
               key={contact._id}

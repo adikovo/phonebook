@@ -65,10 +65,10 @@ export function AllContactsPage() {
   const isFiltering = search.length > 0 || selectedTags.length > 0
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">All Contacts</h1>
-        <Button onClick={openCreate}>
+        <h1 className="text-xl font-bold tracking-tight">All Contacts</h1>
+        <Button onClick={openCreate} size="sm" className="rounded-full">
           <Plus className="size-4 mr-1" />
           Add contact
         </Button>
@@ -104,7 +104,7 @@ export function AllContactsPage() {
           </div>
         )
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           {contacts.map((contact) => (
             <ContactCard
               key={contact._id}

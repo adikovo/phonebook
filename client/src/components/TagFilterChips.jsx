@@ -18,10 +18,12 @@ export function TagFilterChips({ availableTags, selectedTags, onChange }) {
         return (
           <Badge
             key={tag}
-            variant={active ? 'default' : 'outline'}
+            variant={active ? 'default' : 'secondary'}
             className={cn(
-              'cursor-pointer select-none transition-colors',
-              !active && 'hover:bg-accent'
+              'cursor-pointer select-none rounded-full px-3 py-0.5 text-xs font-medium transition-colors',
+              active
+                ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                : 'bg-primary/10 text-primary border-transparent hover:bg-primary/15'
             )}
             onClick={() => toggle(tag)}
           >

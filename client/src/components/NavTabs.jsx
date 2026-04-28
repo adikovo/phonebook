@@ -19,7 +19,7 @@ export function NavTabs() {
               cn(
                 'inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors',
                 isActive
-                  ? 'border-foreground text-foreground'
+                  ? 'border-primary text-primary'
                   : 'border-transparent text-muted-foreground hover:text-foreground'
               )
             }

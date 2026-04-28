@@ -67,7 +67,7 @@ export function ContactDetail({ open, onOpenChange, contact, onEdit, onDeleted }
             {contact.tags && contact.tags.length > 0 && (
               <div className="flex flex-wrap justify-center gap-1">
                 {contact.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary">{tag}</Badge>
+                  <Badge key={tag} variant="secondary" className="bg-primary/10 text-primary border-transparent font-medium">{tag}</Badge>
                 ))}
               </div>
             )}
