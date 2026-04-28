@@ -82,8 +82,8 @@ description: "Task list for Phonebook Contact Manager implementation"
 - [x] T025 [US1] Create `client/src/components/ContactCard.jsx` showing avatar (via `AvatarOrInitials`), name, primary phone label+number, tag badges (display only, can be empty); clickable to open detail
 - [x] T026 [US1] Create `client/src/components/ContactForm.jsx` (shadcn `Dialog`) with controlled inputs for `name` (required), dynamic `phones` array (add/remove rows; each row has `number` text input and `label` select with options Mobile/Home/Work/Custom — Custom reveals a free-text input), `birthday` date picker, `notes` textarea, and a comma-separated `tags` text input; calls `createContact` or `updateContact` on submit; shows server `{ error }` message at the top of the dialog on 400
 - [x] T027 [US1] Create `client/src/components/ContactDetail.jsx` (shadcn `Dialog`) showing all fields read-only with Edit and Delete buttons; Delete shows a confirmation `AlertDialog` before calling `deleteContact`
-- [ ] T028 [US1] Create `client/src/pages/AllContactsPage.jsx`: header row with page title and "Add contact" button (opens empty `ContactForm`); responsive grid of `ContactCard`s from `useContacts()`; clicking a card opens `ContactDetail`; empty state message when `contacts.length === 0`
-- [ ] T029 [US1] Wire `AllContactsPage` to the `/` route in `client/src/App.jsx` (replaces the placeholder)
+- [x] T028 [US1] Create `client/src/pages/AllContactsPage.jsx`: header row with page title and "Add contact" button (opens empty `ContactForm`); responsive grid of `ContactCard`s from `useContacts()`; clicking a card opens `ContactDetail`; empty state message when `contacts.length === 0`
+- [x] T029 [US1] Wire `AllContactsPage` to the `/` route in `client/src/App.jsx` (replaces the placeholder)
 
 **Checkpoint**: User can add a contact, see it on the grid with initials avatar, open it, edit it, delete it (with confirmation). Refresh the page → contacts persist.
 

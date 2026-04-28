@@ -15,7 +15,6 @@ export function ContactCard({ contact, onClick }) {
           <div className="font-medium truncate">{contact.name}</div>
           {primaryPhone && (
             <div className="text-sm text-muted-foreground truncate">
-              <span className="mr-1.5 text-xs uppercase tracking-wide">{primaryPhone.label}</span>
               {primaryPhone.number}
             </div>
           )}

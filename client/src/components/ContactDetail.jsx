@@ -74,17 +74,14 @@ export function ContactDetail({ open, onOpenChange, contact, onEdit, onDeleted }
           </div>
 
           <div className="space-y-4 pt-2">
-            <section>
-              <h3 className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Phones</h3>
-              <ul className="space-y-1 text-sm">
-                {contact.phones?.map((p) => (
-                  <li key={p._id || `${p.label}-${p.number}`} className="flex justify-between">
-                    <span className="text-muted-foreground">{p.label}</span>
-                    <span className="font-medium">{p.number}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <ul className="space-y-3">
+              {contact.phones?.map((p) => (
+                <li key={p._id || `${p.label}-${p.number}`}>
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">{p.label}</div>
+                  <div className="text-sm font-medium">{p.number}</div>
+                </li>
+              ))}
+            </ul>
 
             {birthday && (
               <section>
