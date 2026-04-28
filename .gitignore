@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.local
+
+# build output
+client/dist/
+client/.vite/
+
+# uploaded profile pictures (keep the directory via .gitkeep)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
