@@ -181,12 +181,12 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 **Purpose**: Final pass for usability, error visibility, and validation against the spec.
 
-- [ ] T055 [P] Add a global toast/notification system (shadcn `Sonner` or `Toast`) and surface failed API calls (network errors, 500s) as toasts in `client/src/api/contacts.js` axios interceptor
-- [ ] T056 [P] Confirm contacts are sorted alphabetically by `name` in the server response (case-insensitive); add a Mongoose collation if needed
-- [ ] T057 [P] Audit empty-state copy across pages: "Add your first contact" (zero contacts), "No contacts match your search." (search/filter), "No favorites yet" (Favorites empty)
-- [ ] T058 [P] Verify mobile/tablet responsiveness of the contact grid; cards should stack to a single column below ~640 px
+- [x] T055 [P] Add a global toast/notification system (shadcn `Sonner` or `Toast`) and surface failed API calls (network errors, 500s) as toasts in `client/src/api/contacts.js` axios interceptor
+- [x] T056 [P] Confirm contacts are sorted alphabetically by `name` in the server response (case-insensitive); add a Mongoose collation if needed
+- [x] T057 [P] Audit empty-state copy across pages: "Add your first contact" (zero contacts), "No contacts match your search." (search/filter), "No favorites yet" (Favorites empty)
+- [~] T058 [P] Verify mobile/tablet responsiveness of the contact grid; cards should stack to a single column below ~640 px (skipped — web app, not in scope per user)
 - [ ] T059 Run the full smoke test from [quickstart.md](./quickstart.md) against the running app; fix any deviations
-- [ ] T060 Update root `README.md` with one paragraph: what the app is, the `npm install` + `.env` + `npm run dev` flow, and a link to the spec
+- [x] T060 Update root `README.md` with one paragraph: what the app is, the `npm install` + `.env` + `npm run dev` flow, and a link to the spec
 
 ---
 

@@ -2,6 +2,7 @@ import { Routes, Route, Outlet } from 'react-router-dom'
 import { NavTabs } from '@/components/NavTabs'
 import { AllContactsPage } from '@/pages/AllContactsPage'
 import { FavoritesPage } from '@/pages/FavoritesPage'
+import { Toaster } from '@/components/ui/sonner'
 
 function Layout() {
   return (
@@ -16,12 +17,15 @@ function Layout() {
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<AllContactsPage />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<AllContactsPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+        </Route>
+      </Routes>
+      <Toaster richColors position="top-right" />
+    </>
   )
 }
 

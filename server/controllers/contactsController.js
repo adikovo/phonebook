@@ -50,7 +50,9 @@ async function listContacts(req, res) {
     filter.isFavorite = true
   }
 
-  const contacts = await Contact.find(filter).sort({ name: 1 })
+  const contacts = await Contact.find(filter)
+    .collation({ locale: 'en', strength: 2 })
+    .sort({ name: 1 })
   res.json(contacts)
 }
 

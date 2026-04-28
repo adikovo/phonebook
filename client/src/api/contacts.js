@@ -1,8 +1,22 @@
 import axios from 'axios'
+import { toast } from 'sonner'
 
 const api = axios.create({
   baseURL: '/api',
 })
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (axios.isCancel(error)) return Promise.reject(error)
+    const message =
+      error.response?.data?.error ||
+      error.message ||
+      'Request failed. Please try again.'
+    toast.error(message)
+    return Promise.reject(error)
+  }
+)
 
 export async function listContacts(params = {}) {
   const query = {}
@@ -31,8 +45,6 @@ export async function updateContact(id, body) {
 export async function deleteContact(id) {
   await api.delete(`/contacts/${id}`)
 }
-
-// Stubs — replaced in later phases.
 
 export async function toggleFavorite(id, isFavorite) {
   const { data } = await api.patch(`/contacts/${id}/favorite`, { isFavorite })
