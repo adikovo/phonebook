@@ -29,7 +29,7 @@ description: "Task list for Phonebook Contact Manager implementation"
 - [x] T003 Create `.env.example` at the repo root with placeholder `MONGODB_URI=` and `PORT=4000`
 - [x] T004 [P] Initialize the client workspace at `client/` with Vite (React template), then install `react-router-dom`, `axios`, and Tailwind CSS
 - [x] T005 [P] Initialize the server workspace at `server/` with `npm init -y`, then install `express`, `mongoose`, `multer`, `cors`, `dotenv`, and `nodemon` (dev)
-- [ ] T006 Install and configure shadcn/ui in `client/` (run `npx shadcn@latest init`, generate components.json), then add base primitives: `button`, `card`, `input`, `textarea`, `dialog`, `avatar`, `badge`, `label`
+- [x] T006 Install and configure shadcn/ui in `client/` (run `npx shadcn@latest init`, generate components.json), then add base primitives: `button`, `card`, `input`, `textarea`, `dialog`, `avatar`, `badge`, `label`
 - [ ] T007 Configure Vite dev server proxy in `client/vite.config.js` to forward `/api` and `/uploads` to `http://localhost:4000`
 - [ ] T008 Add npm scripts: `client/package.json` → `dev` runs `vite`; `server/package.json` → `dev` runs `nodemon index.js`; root `dev` runs both via `concurrently`
 
