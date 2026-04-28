@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import { Plus, Trash2, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { ImagePlus, Plus, Trash2, X } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -19,8 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { createContact, updateContact } from '@/api/contacts'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { createContact, updateContact, uploadPhoto, deletePhoto } from '@/api/contacts'
 import { useTags } from '@/hooks/useTags'
+import { getInitials } from '@/lib/initials'
+
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024
+const ALLOWED_IMAGE_TYPES = 'image/jpeg,image/png,image/webp,image/gif'
 
 const PRESET_LABELS = ['Mobile', 'Home', 'Work']
 
@@ -68,6 +73,51 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
   const [tagInputFocused, setTagInputFocused] = useState(false)
   const tagBlurTimeout = useRef(null)
   const { tags: allTags } = useTags()
+
+  const [photoFile, setPhotoFile] = useState(null)
+  const [removePhotoFlag, setRemovePhotoFlag] = useState(false)
+  const [photoError, setPhotoError] = useState(null)
+  const [previewUrl, setPreviewUrl] = useState(null)
+  const fileInputRef = useRef(null)
+
+  useEffect(() => {
+    if (!photoFile) {
+      setPreviewUrl(null)
+      return
+    }
+    const url = URL.createObjectURL(photoFile)
+    setPreviewUrl(url)
+    return () => URL.revokeObjectURL(url)
+  }, [photoFile])
+
+  function handlePhotoSelect(e) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    if (file.size > MAX_PHOTO_SIZE) {
+      setPhotoError('File exceeds 5MB limit')
+      return
+    }
+    setPhotoFile(file)
+    setRemovePhotoFlag(false)
+    setPhotoError(null)
+  }
+
+  function handleRemovePhoto() {
+    setPhotoFile(null)
+    setRemovePhotoFlag(true)
+    setPhotoError(null)
+  }
+
+  const displayedPhotoUrl = photoFile
+    ? previewUrl
+    : removePhotoFlag
+    ? null
+    : contact?.photo
+    ? `/uploads/${contact.photo}`
+    : null
+
+  const canRemovePhoto = !photoFile && !removePhotoFlag && Boolean(contact?.photo)
 
   function updatePhone(index, patch) {
     setForm((f) => ({
@@ -140,9 +190,16 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
     }
 
     try {
-      const saved = isEdit
+      let saved = isEdit
         ? await updateContact(contact._id, body)
         : await createContact(body)
+
+      if (photoFile) {
+        saved = await uploadPhoto(saved._id, photoFile)
+      } else if (removePhotoFlag && saved.photo) {
+        saved = await deletePhoto(saved._id)
+      }
+
       onSaved?.(saved)
       onOpenChange(false)
     } catch (err) {
@@ -165,6 +222,48 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
               {error}
             </div>
           )}
+
+          <div className="flex items-center gap-4">
+            <Avatar className="size-20">
+              {displayedPhotoUrl && <AvatarImage src={displayedPhotoUrl} alt={form.name} />}
+              <AvatarFallback>{getInitials(form.name)}</AvatarFallback>
+            </Avatar>
+            <div className="space-y-1">
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <ImagePlus className="size-4 mr-1" />
+                  {displayedPhotoUrl ? 'Change photo' : 'Add photo'}
+                </Button>
+                {canRemovePhoto && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleRemovePhoto}
+                  >
+                    Remove photo
+                  </Button>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={ALLOWED_IMAGE_TYPES}
+                className="hidden"
+                onChange={handlePhotoSelect}
+              />
+              {photoError ? (
+                <p className="text-xs text-destructive">{photoError}</p>
+              ) : (
+                <p className="text-xs text-muted-foreground">JPEG, PNG, WebP, or GIF · max 5MB</p>
+              )}
+            </div>
+          </div>
 
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>

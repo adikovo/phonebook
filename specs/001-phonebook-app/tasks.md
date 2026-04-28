@@ -169,9 +169,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Client
 
-- [ ] T052 [P] [US5] Implement `uploadPhoto(id, file)` (uses `FormData` with field name `photo`, `Content-Type` auto) and `deletePhoto(id)` in `client/src/api/contacts.js`
-- [ ] T053 [US5] Add a photo section to `client/src/components/ContactForm.jsx`: shows current avatar (`AvatarOrInitials`), file picker button accepting `image/jpeg,image/png,image/webp,image/gif`, a "Remove photo" button (visible only when a photo exists); on file select, validate size ≤ 5 MB client-side and show inline error if violated; on save, if file selected → call `uploadPhoto` after `createContact`/`updateContact` succeeds; if "Remove" was clicked → call `deletePhoto`
-- [ ] T054 [US5] Verify `AvatarOrInitials` already displays uploaded photos correctly in `ContactCard` and `ContactDetail` by passing the `photo` prop (no change should be needed if T017 was done correctly — confirm)
+- [x] T052 [P] [US5] Implement `uploadPhoto(id, file)` (uses `FormData` with field name `photo`, `Content-Type` auto) and `deletePhoto(id)` in `client/src/api/contacts.js`
+- [x] T053 [US5] Add a photo section to `client/src/components/ContactForm.jsx`: shows current avatar (`AvatarOrInitials`), file picker button accepting `image/jpeg,image/png,image/webp,image/gif`, a "Remove photo" button (visible only when a photo exists); on file select, validate size ≤ 5 MB client-side and show inline error if violated; on save, if file selected → call `uploadPhoto` after `createContact`/`updateContact` succeeds; if "Remove" was clicked → call `deletePhoto`
+- [x] T054 [US5] Verify `AvatarOrInitials` already displays uploaded photos correctly in `ContactCard` and `ContactDetail` by passing the `photo` prop (no change should be needed if T017 was done correctly — confirm)
 
 **Checkpoint**: Upload a photo → avatar updates everywhere. Remove → initials return. Bad file type or oversize file shows a clear error and doesn't save.
 

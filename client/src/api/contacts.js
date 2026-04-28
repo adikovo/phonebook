@@ -39,12 +39,16 @@ export async function toggleFavorite(id, isFavorite) {
   return data
 }
 
-export async function uploadPhoto(_id, _file) {
-  throw new Error('uploadPhoto not implemented yet (T052)')
+export async function uploadPhoto(id, file) {
+  const formData = new FormData()
+  formData.append('photo', file)
+  const { data } = await api.post(`/contacts/${id}/photo`, formData)
+  return data
 }
 
-export async function deletePhoto(_id) {
-  throw new Error('deletePhoto not implemented yet (T052)')
+export async function deletePhoto(id) {
+  const { data } = await api.delete(`/contacts/${id}/photo`)
+  return data
 }
 
 export async function listTags() {
