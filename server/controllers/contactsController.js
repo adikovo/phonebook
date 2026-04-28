@@ -33,7 +33,24 @@ async function unlinkPhoto(filename) {
 }
 
 async function listContacts(req, res) {
-  const contacts = await Contact.find().sort({ name: 1 })
+  const filter = {}
+
+  if (req.query.search) {
+    const escaped = req.query.search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(escaped, 'i')
+    filter.$or = [{ name: regex }, { 'phones.number': regex }]
+  }
+
+  if (req.query.tags) {
+    const tags = req.query.tags.split(',').map((t) => t.trim()).filter(Boolean)
+    if (tags.length) filter.tags = { $all: tags }
+  }
+
+  if (req.query.favoritesOnly === 'true') {
+    filter.isFavorite = true
+  }
+
+  const contacts = await Contact.find(filter).sort({ name: 1 })
   res.json(contacts)
 }
 

@@ -1,10 +1,8 @@
 const express = require('express')
+const { listTags } = require('../controllers/tagsController')
 
 const router = express.Router()
 
-// Stub: real implementation lands in T031-T032.
-router.get('/', (req, res) => {
-  res.json([])
-})
+router.get('/', listTags)
 
 module.exports = router

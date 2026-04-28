@@ -97,9 +97,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Server
 
-- [ ] T030 [US2] Extend `listContacts` in `server/controllers/contactsController.js` to read `req.query.search`, `req.query.tags`, `req.query.favoritesOnly`; build a Mongo filter using `$regex` (case-insensitive) on `name` OR `phones.number` for search, `$all` on `tags` for the tag list, and `isFavorite: true` when `favoritesOnly === 'true'`
-- [ ] T031 [P] [US2] Create `server/controllers/tagsController.js` with `listTags` returning `Contact.distinct('tags')` sorted alphabetically
-- [ ] T032 [P] [US2] Create `server/routes/tags.js` with `GET /` → `listTags`; replace the stub mount in `server/index.js` with the real router
+- [x] T030 [US2] Extend `listContacts` in `server/controllers/contactsController.js` to read `req.query.search`, `req.query.tags`, `req.query.favoritesOnly`; build a Mongo filter using `$regex` (case-insensitive) on `name` OR `phones.number` for search, `$all` on `tags` for the tag list, and `isFavorite: true` when `favoritesOnly === 'true'`
+- [x] T031 [P] [US2] Create `server/controllers/tagsController.js` with `listTags` returning `Contact.distinct('tags')` sorted alphabetically
+- [x] T032 [P] [US2] Create `server/routes/tags.js` with `GET /` → `listTags`; replace the stub mount in `server/index.js` with the real router
 
 ### Client
 
