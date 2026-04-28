@@ -47,7 +47,8 @@ export async function deletePhoto(_id) {
 }
 
 export async function listTags() {
-  throw new Error('listTags not implemented yet (T033)')
+  const { data } = await api.get('/tags')
+  return data
 }
 
 export { api }
