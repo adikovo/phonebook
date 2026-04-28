@@ -77,8 +77,8 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Client
 
-- [ ] T023 [P] [US1] Implement axios methods `listContacts`, `getContact`, `createContact`, `updateContact`, `deleteContact` in `client/src/api/contacts.js` (replacing the stubs from T015)
-- [ ] T024 [P] [US1] Create `client/src/hooks/useContacts.js` exposing `{ contacts, loading, error, reload }` and an internal `params` ref so callers can pass `{ search, tags, favoritesOnly }` later — for US1 it's called with no params
+- [x] T023 [P] [US1] Implement axios methods `listContacts`, `getContact`, `createContact`, `updateContact`, `deleteContact` in `client/src/api/contacts.js` (replacing the stubs from T015)
+- [x] T024 [P] [US1] Create `client/src/hooks/useContacts.js` exposing `{ contacts, loading, error, reload }` and an internal `params` ref so callers can pass `{ search, tags, favoritesOnly }` later — for US1 it's called with no params
 - [ ] T025 [US1] Create `client/src/components/ContactCard.jsx` showing avatar (via `AvatarOrInitials`), name, primary phone label+number, tag badges (display only, can be empty); clickable to open detail
 - [ ] T026 [US1] Create `client/src/components/ContactForm.jsx` (shadcn `Dialog`) with controlled inputs for `name` (required), dynamic `phones` array (add/remove rows; each row has `number` text input and `label` select with options Mobile/Home/Work/Custom — Custom reveals a free-text input), `birthday` date picker, `notes` textarea, and a comma-separated `tags` text input; calls `createContact` or `updateContact` on submit; shows server `{ error }` message at the top of the dialog on 400
 - [ ] T027 [US1] Create `client/src/components/ContactDetail.jsx` (shadcn `Dialog`) showing all fields read-only with Edit and Delete buttons; Delete shows a confirmation `AlertDialog` before calling `deleteContact`

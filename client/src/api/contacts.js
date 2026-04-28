@@ -4,28 +4,35 @@ const api = axios.create({
   baseURL: '/api',
 })
 
-// Stubs — replaced with real implementations across T023, T033, T042, T052.
-// They throw so any premature caller fails loudly instead of silently no-oping.
-
-export async function listContacts(_params) {
-  throw new Error('listContacts not implemented yet (T023)')
+export async function listContacts(params = {}) {
+  const query = {}
+  if (params.search) query.search = params.search
+  if (params.tags && params.tags.length) query.tags = params.tags.join(',')
+  if (params.favoritesOnly) query.favoritesOnly = 'true'
+  const { data } = await api.get('/contacts', { params: query })
+  return data
 }
 
-export async function getContact(_id) {
-  throw new Error('getContact not implemented yet (T023)')
+export async function getContact(id) {
+  const { data } = await api.get(`/contacts/${id}`)
+  return data
 }
 
-export async function createContact(_body) {
-  throw new Error('createContact not implemented yet (T023)')
+export async function createContact(body) {
+  const { data } = await api.post('/contacts', body)
+  return data
 }
 
-export async function updateContact(_id, _body) {
-  throw new Error('updateContact not implemented yet (T023)')
+export async function updateContact(id, body) {
+  const { data } = await api.put(`/contacts/${id}`, body)
+  return data
 }
 
-export async function deleteContact(_id) {
-  throw new Error('deleteContact not implemented yet (T023)')
+export async function deleteContact(id) {
+  await api.delete(`/contacts/${id}`)
 }
+
+// Stubs — replaced in later phases.
 
 export async function toggleFavorite(_id, _isFavorite) {
   throw new Error('toggleFavorite not implemented yet (T042)')
