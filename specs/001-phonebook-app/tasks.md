@@ -71,9 +71,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Server
 
-- [ ] T020 [US1] Create `server/controllers/contactsController.js` with `listContacts` (returns all contacts sorted by `name`, no filters yet), `getContact`, `createContact`, `updateContact`, `deleteContact` (also unlinks `server/uploads/<photo>` if set, ignoring ENOENT)
-- [ ] T021 [US1] Create `server/routes/contacts.js` wiring `GET /`, `GET /:id`, `POST /`, `PUT /:id`, `DELETE /:id` to the controller; include `Location` header on 201
-- [ ] T022 [US1] Replace the stub mount in `server/index.js` with the real `contacts` router; verify with `curl http://localhost:4000/api/contacts` returns `[]`
+- [x] T020 [US1] Create `server/controllers/contactsController.js` with `listContacts` (returns all contacts sorted by `name`, no filters yet), `getContact`, `createContact`, `updateContact`, `deleteContact` (also unlinks `server/uploads/<photo>` if set, ignoring ENOENT)
+- [x] T021 [US1] Create `server/routes/contacts.js` wiring `GET /`, `GET /:id`, `POST /`, `PUT /:id`, `DELETE /:id` to the controller; include `Location` header on 201
+- [x] T022 [US1] Replace the stub mount in `server/index.js` with the real `contacts` router; verify with `curl http://localhost:4000/api/contacts` returns `[]`
 
 ### Client
 

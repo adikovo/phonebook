@@ -1,10 +1,18 @@
 const express = require('express')
+const {
+  listContacts,
+  getContact,
+  createContact,
+  updateContact,
+  deleteContact,
+} = require('../controllers/contactsController')
 
 const router = express.Router()
 
-// Stub: real CRUD endpoints land in T020-T022, T040-T041, T049-T051.
-router.get('/', (req, res) => {
-  res.json([])
-})
+router.get('/', listContacts)
+router.get('/:id', getContact)
+router.post('/', createContact)
+router.put('/:id', updateContact)
+router.delete('/:id', deleteContact)
 
 module.exports = router
