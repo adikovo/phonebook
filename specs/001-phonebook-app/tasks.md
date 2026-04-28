@@ -147,9 +147,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Client
 
-- [ ] T046 [US4] Replace the comma-separated `tags` text input in `client/src/components/ContactForm.jsx` with a chip input: existing tags shown as removable chips, a text input below to add a new one (Enter or comma confirms), suggestions dropdown sourced from `useTags()` filtered by the current input
-- [ ] T047 [US4] Display tag chips on `client/src/components/ContactCard.jsx` (limit to first 3, "+N more" if extra) using shadcn `Badge`
-- [ ] T048 [US4] Display all tag chips on `client/src/components/ContactDetail.jsx`
+- [x] T046 [US4] Replace the comma-separated `tags` text input in `client/src/components/ContactForm.jsx` with a chip input: existing tags shown as removable chips, a text input below to add a new one (Enter or comma confirms), suggestions dropdown sourced from `useTags()` filtered by the current input
+- [x] T047 [US4] Display tag chips on `client/src/components/ContactCard.jsx` (limit to first 3, "+N more" if extra) using shadcn `Badge`
+- [x] T048 [US4] Display all tag chips on `client/src/components/ContactDetail.jsx`
 
 **Checkpoint**: Editing a contact suggests existing tags; new tags become available across the app immediately after save.
 

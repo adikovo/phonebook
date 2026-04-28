@@ -24,6 +24,7 @@ export function FavoritesPage() {
 
   const [formOpen, setFormOpen] = useState(false)
   const [editingContact, setEditingContact] = useState(null)
+  const [formSession, setFormSession] = useState(0)
 
   function openDetail(contact) {
     setDetailContact(contact)
@@ -33,6 +34,7 @@ export function FavoritesPage() {
   function openEdit(contact) {
     setDetailOpen(false)
     setEditingContact(contact)
+    setFormSession((s) => s + 1)
     setFormOpen(true)
   }
 
@@ -98,6 +100,7 @@ export function FavoritesPage() {
       )}
 
       <ContactForm
+        key={formSession}
         open={formOpen}
         onOpenChange={setFormOpen}
         contact={editingContact}

@@ -22,6 +22,7 @@ export function AllContactsPage() {
 
   const [formOpen, setFormOpen] = useState(false)
   const [editingContact, setEditingContact] = useState(null)
+  const [formSession, setFormSession] = useState(0)
 
   function openDetail(contact) {
     setDetailContact(contact)
@@ -30,12 +31,14 @@ export function AllContactsPage() {
 
   function openCreate() {
     setEditingContact(null)
+    setFormSession((s) => s + 1)
     setFormOpen(true)
   }
 
   function openEdit(contact) {
     setDetailOpen(false)
     setEditingContact(contact)
+    setFormSession((s) => s + 1)
     setFormOpen(true)
   }
 
@@ -114,6 +117,7 @@ export function AllContactsPage() {
       )}
 
       <ContactForm
+        key={formSession}
         open={formOpen}
         onOpenChange={setFormOpen}
         contact={editingContact}

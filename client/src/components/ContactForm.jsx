@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Plus, Trash2 } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { Plus, Trash2, X } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
 import {
   Select,
   SelectContent,
@@ -19,6 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { createContact, updateContact } from '@/api/contacts'
+import { useTags } from '@/hooks/useTags'
 
 const PRESET_LABELS = ['Mobile', 'Home', 'Work']
 
@@ -42,7 +44,7 @@ function buildInitialState(contact) {
       phones: [emptyPhone()],
       birthday: '',
       notes: '',
-      tags: '',
+      tags: [],
     }
   }
   return {
@@ -52,7 +54,7 @@ function buildInitialState(contact) {
       : [emptyPhone()],
     birthday: contact.birthday ? contact.birthday.slice(0, 10) : '',
     notes: contact.notes || '',
-    tags: (contact.tags || []).join(', '),
+    tags: contact.tags || [],
   }
 }
 
@@ -62,12 +64,10 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    if (open) {
-      setForm(buildInitialState(contact))
-      setError(null)
-    }
-  }, [open, contact])
+  const [tagInput, setTagInput] = useState('')
+  const [tagInputFocused, setTagInputFocused] = useState(false)
+  const tagBlurTimeout = useRef(null)
+  const { tags: allTags } = useTags()
 
   function updatePhone(index, patch) {
     setForm((f) => ({
@@ -87,10 +87,46 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
     }))
   }
 
+  function addTag(raw) {
+    const tag = raw.trim()
+    if (!tag) return
+    if (form.tags.includes(tag)) {
+      setTagInput('')
+      return
+    }
+    setForm((f) => ({ ...f, tags: [...f.tags, tag] }))
+    setTagInput('')
+  }
+
+  function removeTag(tag) {
+    setForm((f) => ({ ...f, tags: f.tags.filter((t) => t !== tag) }))
+  }
+
+  function handleTagKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      if (tagInput.trim()) {
+        e.preventDefault()
+        addTag(tagInput)
+      }
+    } else if (e.key === 'Backspace' && !tagInput && form.tags.length > 0) {
+      removeTag(form.tags[form.tags.length - 1])
+    }
+  }
+
+  const suggestions = allTags
+    .filter((t) => typeof t === 'string' && t.length > 0)
+    .filter((t) => !form.tags.includes(t))
+    .filter((t) => t.toLowerCase().includes(tagInput.toLowerCase()))
+    .slice(0, 8)
+
+  const showSuggestions = tagInputFocused && tagInput.length > 0 && suggestions.length > 0
+
   async function handleSubmit(e) {
     e.preventDefault()
     setSubmitting(true)
     setError(null)
+
+    const tagsToSave = tagInput.trim() ? [...form.tags, tagInput.trim()] : form.tags
 
     const body = {
       name: form.name.trim(),
@@ -100,10 +136,7 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
       })),
       birthday: form.birthday || null,
       notes: form.notes,
-      tags: form.tags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean),
+      tags: Array.from(new Set(tagsToSave)),
     }
 
     try {
@@ -227,15 +260,56 @@ export function ContactForm({ open, onOpenChange, contact, onSaved }) {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="tags">Tags</Label>
-            <Input
-              id="tags"
-              placeholder="Family, Work, Friends"
-              value={form.tags}
-              onChange={(e) => setForm({ ...form, tags: e.target.value })}
-            />
-            <p className="text-xs text-muted-foreground">Separate multiple tags with commas.</p>
+          <div className="space-y-2 relative">
+            <Label htmlFor="tag-input">Tags</Label>
+            <div className="flex flex-wrap gap-2 rounded-md border bg-transparent p-2 min-h-10 focus-within:ring-2 focus-within:ring-ring">
+              {form.tags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="gap-1 pr-1">
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => removeTag(tag)}
+                    aria-label={`Remove ${tag}`}
+                    className="rounded-sm hover:bg-foreground/10"
+                  >
+                    <X className="size-3" />
+                  </button>
+                </Badge>
+              ))}
+              <input
+                id="tag-input"
+                type="text"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleTagKeyDown}
+                onFocus={() => {
+                  if (tagBlurTimeout.current) clearTimeout(tagBlurTimeout.current)
+                  setTagInputFocused(true)
+                }}
+                onBlur={() => {
+                  tagBlurTimeout.current = setTimeout(() => setTagInputFocused(false), 120)
+                }}
+                placeholder={form.tags.length === 0 ? 'Add a tag and press Enter…' : ''}
+                className="flex-1 min-w-24 bg-transparent text-sm outline-none"
+              />
+            </div>
+            {showSuggestions && (
+              <div className="absolute left-0 right-0 z-10 mt-1 rounded-md border bg-popover p-1 shadow-md">
+                {suggestions.map((s) => (
+                  <button
+                    type="button"
+                    key={s}
+                    onMouseDown={(e) => {
+                      e.preventDefault()
+                      addTag(s)
+                    }}
+                    className="block w-full rounded px-2 py-1 text-left text-sm hover:bg-accent"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <DialogFooter>
