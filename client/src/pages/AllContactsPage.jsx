@@ -4,10 +4,17 @@ import { Button } from '@/components/ui/button'
 import { ContactCard } from '@/components/ContactCard'
 import { ContactForm } from '@/components/ContactForm'
 import { ContactDetail } from '@/components/ContactDetail'
+import { SearchBar } from '@/components/SearchBar'
+import { TagFilterChips } from '@/components/TagFilterChips'
 import { useContacts } from '@/hooks/useContacts'
+import { useTags } from '@/hooks/useTags'
 
 export function AllContactsPage() {
-  const { contacts, loading, error, reload } = useContacts()
+  const [search, setSearch] = useState('')
+  const [selectedTags, setSelectedTags] = useState([])
+
+  const { contacts, loading, error, reload } = useContacts({ search, tags: selectedTags })
+  const { tags: availableTags, reload: reloadTags } = useTags()
 
   const [detailContact, setDetailContact] = useState(null)
   const [detailOpen, setDetailOpen] = useState(false)
@@ -31,8 +38,21 @@ export function AllContactsPage() {
     setFormOpen(true)
   }
 
+  function handleSaved() {
+    reload()
+    reloadTags()
+    setEditingContact(null)
+  }
+
+  function handleDeleted() {
+    reload()
+    reloadTags()
+  }
+
+  const isFiltering = search.length > 0 || selectedTags.length > 0
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">All Contacts</h1>
         <Button onClick={openCreate}>
@@ -40,6 +60,14 @@ export function AllContactsPage() {
           Add contact
         </Button>
       </div>
+
+      <SearchBar value={search} onChange={setSearch} />
+
+      <TagFilterChips
+        availableTags={availableTags}
+        selectedTags={selectedTags}
+        onChange={setSelectedTags}
+      />
 
       {error && (
         <div className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -50,12 +78,18 @@ export function AllContactsPage() {
       {loading ? (
         <div className="text-sm text-muted-foreground">Loading…</div>
       ) : contacts.length === 0 ? (
-        <div className="rounded-md border border-dashed py-12 text-center text-muted-foreground">
-          <p className="mb-2">No contacts yet.</p>
-          <Button variant="outline" onClick={openCreate}>
-            Add your first contact
-          </Button>
-        </div>
+        isFiltering ? (
+          <div className="rounded-md border border-dashed py-12 text-center text-muted-foreground">
+            No contacts match your search.
+          </div>
+        ) : (
+          <div className="rounded-md border border-dashed py-12 text-center text-muted-foreground">
+            <p className="mb-2">No contacts yet.</p>
+            <Button variant="outline" onClick={openCreate}>
+              Add your first contact
+            </Button>
+          </div>
+        )
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
           {contacts.map((contact) => (
@@ -68,10 +102,7 @@ export function AllContactsPage() {
         open={formOpen}
         onOpenChange={setFormOpen}
         contact={editingContact}
-        onSaved={() => {
-          reload()
-          setEditingContact(null)
-        }}
+        onSaved={handleSaved}
       />
 
       <ContactDetail
@@ -79,7 +110,7 @@ export function AllContactsPage() {
         onOpenChange={setDetailOpen}
         contact={detailContact}
         onEdit={openEdit}
-        onDeleted={() => reload()}
+        onDeleted={handleDeleted}
       />
     </div>
   )

@@ -107,9 +107,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 - [x] T034 [P] [US2] Create `client/src/hooks/useTags.js` exposing `{ tags, reload }` that fetches `/api/tags`
 - [x] T035 [P] [US2] Create `client/src/components/SearchBar.jsx`: shadcn `Input` with a search icon, controlled value, `onChange` propagated upward; parent debounces input by 150 ms before triggering refetch
 - [x] T036 [P] [US2] Create `client/src/components/TagFilterChips.jsx`: takes `availableTags` and `selectedTags`; renders a horizontally scrollable row of shadcn `Badge` toggles; clicking toggles a tag in/out of the selection; emits `onChange(selectedTags)`
-- [ ] T037 [US2] Update `client/src/hooks/useContacts.js` to accept `{ search, tags, favoritesOnly }` and pass them as query params to `listContacts`; trigger refetch when any param changes
-- [ ] T038 [US2] Wire `SearchBar` and `TagFilterChips` into `client/src/pages/AllContactsPage.jsx`: stack them above the grid; manage local state for search text (debounced) and selected tags; pass to `useContacts`
-- [ ] T039 [US2] Add an empty-state component when search/filter returns no results (separate message from "no contacts at all"): "No contacts match your search."
+- [x] T037 [US2] Update `client/src/hooks/useContacts.js` to accept `{ search, tags, favoritesOnly }` and pass them as query params to `listContacts`; trigger refetch when any param changes
+- [x] T038 [US2] Wire `SearchBar` and `TagFilterChips` into `client/src/pages/AllContactsPage.jsx`: stack them above the grid; manage local state for search text (debounced) and selected tags; pass to `useContacts`
+- [x] T039 [US2] Add an empty-state component when search/filter returns no results (separate message from "no contacts at all"): "No contacts match your search."
 
 **Checkpoint**: Typing in the search bar filters the list within ~200 ms; toggling tag chips combines with search; clearing both restores the full list.
 
