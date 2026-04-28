@@ -123,8 +123,8 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Server
 
-- [ ] T040 [US3] Add `toggleFavorite` to `server/controllers/contactsController.js` (validates body has boolean `isFavorite`, updates the doc, returns it)
-- [ ] T041 [US3] Add `PATCH /:id/favorite` route in `server/routes/contacts.js` wired to `toggleFavorite`
+- [x] T040 [US3] Add `toggleFavorite` to `server/controllers/contactsController.js` (validates body has boolean `isFavorite`, updates the doc, returns it)
+- [x] T041 [US3] Add `PATCH /:id/favorite` route in `server/routes/contacts.js` wired to `toggleFavorite`
 
 ### Client
 

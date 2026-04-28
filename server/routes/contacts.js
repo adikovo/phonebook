@@ -5,6 +5,7 @@ const {
   createContact,
   updateContact,
   deleteContact,
+  toggleFavorite,
 } = require('../controllers/contactsController')
 
 const router = express.Router()
@@ -14,5 +15,6 @@ router.get('/:id', getContact)
 router.post('/', createContact)
 router.put('/:id', updateContact)
 router.delete('/:id', deleteContact)
+router.patch('/:id/favorite', toggleFavorite)
 
 module.exports = router

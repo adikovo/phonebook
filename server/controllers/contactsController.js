@@ -83,10 +83,26 @@ async function deleteContact(req, res) {
   res.status(204).end()
 }
 
+async function toggleFavorite(req, res) {
+  if (typeof req.body?.isFavorite !== 'boolean') {
+    const err = new Error('isFavorite must be a boolean')
+    err.status = 400
+    throw err
+  }
+  const contact = await Contact.findByIdAndUpdate(
+    req.params.id,
+    { isFavorite: req.body.isFavorite },
+    { new: true }
+  )
+  if (!contact) throw notFound()
+  res.json(contact)
+}
+
 module.exports = {
   listContacts,
   getContact,
   createContact,
   updateContact,
   deleteContact,
+  toggleFavorite,
 }
