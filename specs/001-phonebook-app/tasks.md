@@ -53,9 +53,9 @@ description: "Task list for Phonebook Contact Manager implementation"
 
 ### Client foundation
 
-- [ ] T015 Create `client/src/api/contacts.js` exporting axios-based functions stubs: `listContacts(params)`, `getContact(id)`, `createContact(body)`, `updateContact(id, body)`, `deleteContact(id)`, `toggleFavorite(id, isFavorite)`, `uploadPhoto(id, file)`, `deletePhoto(id)`, `listTags()` — all targeting `/api/...`
-- [ ] T016 [P] Create `client/src/lib/initials.js` exporting `getInitials(name)` that returns the first letter of the first word + first letter of the last word, uppercased; if single word, return only its first letter
-- [ ] T017 [P] Create `client/src/components/AvatarOrInitials.jsx` rendering the shadcn `Avatar` with `AvatarImage src={photoUrl}` if `photo` filename is provided (URL = `/uploads/${photo}`), otherwise an `AvatarFallback` with initials from `getInitials(name)`
+- [x] T015 Create `client/src/api/contacts.js` exporting axios-based functions stubs: `listContacts(params)`, `getContact(id)`, `createContact(body)`, `updateContact(id, body)`, `deleteContact(id)`, `toggleFavorite(id, isFavorite)`, `uploadPhoto(id, file)`, `deletePhoto(id)`, `listTags()` — all targeting `/api/...`
+- [x] T016 [P] Create `client/src/lib/initials.js` exporting `getInitials(name)` that returns the first letter of the first word + first letter of the last word, uppercased; if single word, return only its first letter
+- [x] T017 [P] Create `client/src/components/AvatarOrInitials.jsx` rendering the shadcn `Avatar` with `AvatarImage src={photoUrl}` if `photo` filename is provided (URL = `/uploads/${photo}`), otherwise an `AvatarFallback` with initials from `getInitials(name)`
 - [ ] T018 [P] Create `client/src/components/NavTabs.jsx` rendering two links (`/` All Contacts, `/favorites` Favorites) using `react-router-dom` `NavLink`, styled as a tab bar with active state
 - [ ] T019 Set up `client/src/main.jsx` with `BrowserRouter` and `client/src/App.jsx` rendering the layout shell: `NavTabs` at the top, `<Outlet />` below; configure routes `/` and `/favorites` (page components are placeholders for now)
 
